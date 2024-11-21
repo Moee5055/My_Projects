@@ -7,17 +7,25 @@ import {
   MessageCircle,
 } from "lucide-react";
 
-type BlogProps = {
-  writerInfo: string;
-  heading: string;
-  subHeading: string;
-  date: string;
-  likes: number;
-};
+import { PostType } from "./AddNewBlog";
+import { useContext } from "react";
+import { PostsContext } from "@/Provider";
 
-const Blog = ({ writerInfo, heading, subHeading, date, likes }: BlogProps) => {
+const Blog = ({
+  writerInfo,
+  heading,
+  subHeading,
+  date,
+  likes,
+  imageUrl,
+}: PostType) => {
+  const context = useContext(PostsContext);
+  if (!context) return null;
+
+  const { handleRemovePost } = context;
+
   return (
-    <section className="border-b pb-6">
+    <section className="border-b pb-6 cursor-pointer pr-3">
       <div className="flex items-center gap-2">
         <Avatar className="h-6 w-6">
           <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
@@ -27,7 +35,7 @@ const Blog = ({ writerInfo, heading, subHeading, date, likes }: BlogProps) => {
       </div>
 
       {/* content */}
-      <div className="flex pt-4">
+      <div className="flex pt-4 gap-10">
         <div className="flex-1 pr-3">
           <h2 className="text-xl font-extrabold">{heading}</h2>
           <p className="text-[0.9rem] mb-[2rem] text-slate-500">{subHeading}</p>
@@ -53,7 +61,8 @@ const Blog = ({ writerInfo, heading, subHeading, date, likes }: BlogProps) => {
             <div className="flex items-center gap-5">
               <CircleMinus
                 size={20}
-                className="text-slate-500 cursor-pointer"
+                className="text-slate-500 cursor-pointer hover:bg-red-500 hover:stroke-white rounded-full"
+                onClick={() => handleRemovePost(heading)}
               />
               <BookmarkPlus
                 size={20}
@@ -64,7 +73,14 @@ const Blog = ({ writerInfo, heading, subHeading, date, likes }: BlogProps) => {
           </div>
         </div>
         {/* blog image */}
-        <div className="min-w-[150px]">hello</div>
+        <div className="max-w-[120px] max-h-[80px]">
+          <img
+            src={imageUrl}
+            className={`h-full w-full object-cover object-center ${
+              !imageUrl && "hidden"
+            }`}
+          />
+        </div>
       </div>
     </section>
   );

@@ -1,10 +1,12 @@
-import { Bell, Search, SquarePen } from "lucide-react";
+import { Bell, Search } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+
+import AddNewBlog from "./AddNewBlog";
 
 const Navbar = () => {
   return (
     <header className="flex items-center py-2 px-3 rounded-sm border">
-      {/* right side of navigation */}
+      {/* left side of navigation */}
       <div className="flex items-center gap-5 mr-auto">
         <h1
           style={{
@@ -27,19 +29,9 @@ const Navbar = () => {
         </div>
       </div>
       {/* 
-      left side of navigation */}
+      right side of navigation */}
       <div className="flex items-center gap-3 md:gap-5">
-        <div className="flex items-center gap-1">
-          <SquarePen size={20} className="text-gray-500" />
-          <span
-            style={{
-              fontFamily: "Playfair Display",
-            }}
-            className="font-normal text-sm"
-          >
-            Write
-          </span>
-        </div>
+        <AddNewBlog />
         <Bell size={20} className="text-gray-500" />
         <Avatar>
           <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
