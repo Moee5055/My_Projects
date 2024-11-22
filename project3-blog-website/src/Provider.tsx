@@ -36,7 +36,7 @@ export const PostsContext = createContext<PostsContextType | undefined>(
 const Provider = ({ children }: { children: React.ReactNode }) => {
   const [posts, setPosts] = useState<PostType[]>(() => {
     const allPosts = localStorage.getItem("posts");
-    return allPosts ? [...blogs, ...JSON.parse(allPosts)] : [...blogs];
+    return allPosts ? [...JSON.parse(allPosts)] : [...blogs];
   });
 
   //add new Posts
