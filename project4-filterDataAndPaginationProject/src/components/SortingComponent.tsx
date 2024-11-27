@@ -5,9 +5,10 @@ import UserData from "./UserData";
 type SortingComponentProps = {
   handleSorting: (key: keyof typeof UserData) => void;
   selectedKey: string;
+  handleFiltering: (filters: UpdateFilterType) => void;
 };
 
-type UpdateFilterType = {
+export type UpdateFilterType = {
   [key: string]: string;
 };
 
@@ -16,7 +17,7 @@ const sortingType = ["Name", "Country", "Date"];
 const filteringType = [
   {
     label: "Filter By Name",
-    name: "userName",
+    name: "name",
   },
   {
     label: "Filter By Country",
@@ -39,6 +40,7 @@ const filteringType = [
 const SortingComponent = ({
   handleSorting,
   selectedKey = "sort",
+  handleFiltering,
 }: SortingComponentProps) => {
   const [openMenu, setOpenMenu] = useState({
     sortOpenMenu: false,
@@ -46,7 +48,7 @@ const SortingComponent = ({
   });
 
   const [updatefilter, setUpdateFilter] = useState<UpdateFilterType>({
-    userName: "",
+    name: "",
     country: "",
     email: "",
     project: "",
@@ -90,10 +92,12 @@ const SortingComponent = ({
 
   const handleUpdateFilter = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setUpdateFilter((prevState) => ({
-      ...prevState,
+    const newFilters = {
+      ...updatefilter,
       [name]: value,
-    }));
+    };
+    setUpdateFilter(newFilters);
+    handleFiltering(newFilters);
   };
 
   return (
